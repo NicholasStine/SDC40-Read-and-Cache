@@ -15,7 +15,7 @@ uint8_t sclPin = 21;
 SensirionI2CScd4x scd4x;
 
 void setup() {
-  Serial.begin(19200);
+  Serial.begin(1200);
   Wire.begin();
   scd4x.begin(Wire);
 
