@@ -1,0 +1,21 @@
+#include <EEPROM.h>
+
+void setup() {
+  Serial.begin(19200);
+
+  Serial.println("CO2, Humidity");
+  for (int i = 0; i <= E2END; i++) {
+    int stored_reading = EEPROM.read(i);
+    byte bin_co2 = 0b00001111 & stored_reading;
+    byte bin_hum = 0b11110000 & stored_reading;
+
+    int co2 = (bin_co2 * 25) + 100;
+    int hum = int((bin_hum / 16) * 6.25);
+        hum = (hum / 5 + (hum % 5 > 2)) * 5;
+    Serial.println(String(co2) + "," + String(hum));
+  }
+}
+
+void loop() {
+  // nuffin happenin heur
+}
