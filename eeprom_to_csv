@@ -1,7 +1,7 @@
 #include <EEPROM.h>
 
 void setup() {
-  Serial.begin(19200);
+  Serial.begin(1200);
 
   Serial.println("CO2, Humidity");
   for (int i = 0; i <= E2END; i++) {
