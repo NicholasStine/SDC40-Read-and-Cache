@@ -55,6 +55,7 @@ void saveReadingsToEeprom(double co2, int humidity) {
 }
 
 void loop() {
+	return;
   uint16_t co2;
   float temperature;
   float humidity;
