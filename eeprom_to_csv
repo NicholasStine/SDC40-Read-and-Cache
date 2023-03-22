@@ -1,17 +1,22 @@
 #include <EEPROM.h>
 
+int MEM_LIM = E2END;
+int CO2_MAX = 1200;
+int CO2_MIN = 100;
+
 void setup() {
-  Serial.begin(1200);
+  Serial.begin(19200);
 
   Serial.println("CO2, Humidity");
-  for (int i = 0; i <= E2END; i++) {
+  for (int i = 0; i <= MEM_LIM; i++) {
     int stored_reading = EEPROM.read(i);
     byte bin_co2 = 0b00001111 & stored_reading;
     byte bin_hum = 0b11110000 & stored_reading;
 
-    int co2 = (bin_co2 * 25) + 100;
-    int hum = int((bin_hum / 16) * 6.25);
-        hum = (hum / 5 + (hum % 5 > 2)) * 5;
+    int co2 = (bin_co2 * ((CO2_MAX - CO2_MIN) / 16)) + CO2_MIN;
+    int hum = int((bin_hum >> 4) * 6.25);
+    co2 = (co2 / 5 + (co2 % 5 > 2)) * 5;
+    hum = (hum / 5 + (hum % 5 > 2)) * 5;
     Serial.println(String(co2) + "," + String(hum));
   }
 }
